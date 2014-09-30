@@ -1,0 +1,92 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+		<!-- Apple devices fullscreen -->
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+		<!-- Apple devices fullscreen -->
+		<meta names="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+		
+		<title><?php echo SITE_NAME; ?> - ERROR > File Not Found</title>
+		
+	    <?php if( !empty( $_SESSION['site']['phrases'] ) ): ?>    
+	    	<script type="text/javascript">
+	    		var SITE_PHRASES = new Array();
+				<?php foreach( $_SESSION['site']['phrases'] AS $key => $value ): ?>
+					SITE_PHRASES['<?php echo $key; ?>'] = '<?php echo addslashes( str_replace( "\r\n", '<br>', $value ) ); ?>';
+				<?php endforeach; ?>
+	    	</script>
+	    <?php endif; ?>		
+			    		   	    
+		<script type="text/javascript">
+			var DATATABLE				= null;
+			var BASEURL					= '<?php echo PROTOCOL_RELATIVE_URL; ?>';
+			var DEFAULT_PRELOADER_IMAGE	= '<?php echo SITE_DEFAULT_ADMIN_PRELOADER_IMAGE_PATH; ?>';
+			var CURRENT_THEME 			= '<?php echo $currentTheme; ?>';
+			var CURRENT_USERNAME		= '<?php echo $_SESSION['user']['username']; ?>';
+			var SITE_NAME				= '<?php echo SITE_NAME; ?>';			
+			var CURRENT_USER			= new Array();	
+					
+			<?php foreach( $_SESSION['user'] AS $key => $value ): ?>
+				CURRENT_USER['<?php echo $key; ?>'] = '<?php echo $value; ?>';
+			<?php endforeach; ?>
+		</script>		
+	
+		<!-- Bootstrap -->
+		<link rel="stylesheet" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/css/admin/bootstrap.min.css">
+		<!-- Bootstrap responsive -->
+		<link rel="stylesheet" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/css/admin/bootstrap-responsive.min.css">
+		<!-- Theme CSS -->
+		<link rel="stylesheet" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/css/admin/style.css">
+		<!-- Color CSS -->
+		<link rel="stylesheet" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/css/admin/themes.css">
+	
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/phpjs.js?<?php echo rand(); ?>"></script>	
+		<!-- jQuery -->
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery-1.8.3.min.js"></script>
+		<!-- Bootstrap -->
+		<script src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/admin/bootstrap.min.js"></script>		
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.imgpreload.min.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/admin/plugins/imagesLoaded/jquery.imagesloaded.min.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/admin/img-preload.js?<?php echo rand(); ?>"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.blockUI.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/admin/jquery.blockUI.defaults.js?<?php echo rand(); ?>"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.cookie.js"></script>		
+		
+		<!-- Nice Scroll -->
+		<script src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/admin/plugins/nicescroll/jquery.nicescroll.min.js"></script>
+	
+		<!--[if lte IE 9]>
+			<script src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/admin/plugins/placeholder/jquery.placeholder.min.js"></script>
+			<script>
+				$(document).ready(function() {
+					$('input, textarea').placeholder();
+				});
+			</script>
+		<![endif]-->
+		
+	
+		<!-- Favicon -->
+		<link rel="shortcut icon" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/images/admin/favicon.ico" />
+		<!-- Apple devices Homescreen icon -->
+		<link rel="apple-touch-icon-precomposed" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/images/admin/apple-touch-icon-precomposed.png" />
+	
+		<link rel="stylesheet" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/css/admin/custom.css?<?php echo rand(); ?>">
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/admin/jquery.observor.js?<?php echo rand(); ?>"></script>			
+	</head>
+
+	<body class="error">		
+		<?php echo $this->partial('partials/blockui.phtml'); ?>	
+		<div class="wrapper">
+			<div class="code"><span>404</span><i class="icon-warning-sign"></i></div>
+			<div class="desc">Oops! Sorry, that file does not exist.</div>
+			<div class="buttons">
+				<div class="pull-left"><a href="<?php echo PROTOCOL_RELATIVE_URL; ?>" class="btn"><i class="icon-arrow-left"></i> Back</a></div>
+			</div>
+		</div>
+		
+		<?php echo $this->partial('partials/img-preload.phtml'); ?>		
+	</body>
+
+</html>

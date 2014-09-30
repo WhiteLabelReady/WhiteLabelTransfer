@@ -1,0 +1,16 @@
+.gradient(@direction , @from, @to)
+{
+    background: @to;
+    background: -webkit-linear-gradient(@direction, @from, @to);
+    background: -moz-linear-gradient(@direction, @from, @to);
+    background-image: -ms-linear-gradient(@direction, @from 0%, @to 100%);
+    background: -o-linear-gradient(@direction, @from, @to);
+    background: linear-gradient(@direction, @from, @to);
+}
+
+.boxshadow(@offsetX: 0, @offsetY: 0, @blur : 2px, @color)
+{
+    -moz-box-shadow: @arguments;
+    -webkit-box-shadow: @arguments;
+    box-shadow: @arguments;
+}

@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	    <title><?php echo SITE_NAME; ?></title>
+	    <meta charset="UTF-8" />
+	    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0">
+	    
+	 	<?php
+			if( (int)SITE_ALLOW_TEMPLATE_CHANGE == 1 ) {
+	 			$currentTheme = ( strlen( @$_COOKIE['theme'] ) ) ? $_COOKIE['theme'] : SITE_DEFAULT_TEMPLATE;
+			} else {
+	 			$currentTheme = SITE_DEFAULT_TEMPLATE;
+	 			setcookie( 'theme', SITE_DEFAULT_TEMPLATE, time() + SITE_COOKIE_TIMEOUT, SITE_COOKIE_PATH );
+			}  
+		?> 
+		
+		<?php $siteThemes = $GLOBALS['SITE_THEMES']; ?>    	 
+				
+		<?php if( !empty( $siteThemes ) ): ?>
+			
+			<?php 		
+				if( $currentTheme != SITE_DEFAULT_TEMPLATE ) {
+					if( !array_key_exists( $currentTheme, $siteThemes ) ) {
+						$currentTheme = SITE_DEFAULT_TEMPLATE;
+						setcookie( 'theme', SITE_DEFAULT_TEMPLATE, time() + SITE_COOKIE_TIMEOUT, SITE_COOKIE_PATH );
+					}
+				}
+			?>
+						
+			<script type="text/javascript">	
+				var SITE_THEMES = new Array();
+				<?php foreach( $siteThemes AS $key => $value ): ?>
+					SITE_THEMES['<?php echo $key; ?>'] = '<?php echo $value; ?>';	
+				<?php endforeach; ?>
+			</script>
+			<?php else: ?>
+			<script type="text/javascript">		
+				var SITE_THEMES = new Array();
+			</script>			
+		<?php endif; ?>
+		
+	    <?php if( !empty( $_SESSION['site']['phrases'] ) ): ?>    
+	    	<script type="text/javascript">
+	    		var SITE_PHRASES = new Array();
+				<?php foreach( $_SESSION['site']['phrases'] AS $key => $value ): ?>
+					SITE_PHRASES['<?php echo $key; ?>'] = '<?php echo addslashes( str_replace( "\r\n", '<br>', $value ) ); ?>';
+				<?php endforeach; ?>
+	    	</script>
+	    <?php endif; ?>	
+	    
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/phpjs.js?<?php echo rand(); ?>"></script>	    		   
+	    
+		<script type="text/javascript">
+			var BASEURL					= '<?php echo PROTOCOL_RELATIVE_URL; ?>';
+			var DEFAULT_PRELOADER_IMAGE	= '<?php echo SITE_DEFAULT_PRELOADER_IMAGE_PATH; ?>';
+			var CURRENT_THEME 			= '<?php echo $currentTheme; ?>';
+			var CURRENT_USERNAME		= '<?php echo $_SESSION['user']['username']; ?>';
+			var DEFAULT_MAX_UPLOAD_SIZE = '<?php echo SITE_DEFAULT_MAX_UPLOAD_SIZE; ?>';
+			var SITE_NAME				= '<?php echo SITE_NAME; ?>';
+			var BG						= new Array();			
+			var CURRENT_USER			= new Array();
+			var MAX_RECIPIENTS			= <?php echo (int)SITE_GUEST_MAX_RECIPIENTS; ?>;
+			var MAX_FILE_SIZE			= <?php echo (int)SITE_GUEST_MAX_FILE_SIZE; ?>;
+			var MAX_QUEUE_SIZE			= <?php echo (int)SITE_GUEST_MAX_QUEUE_SIZE; ?>;
+			var TOTAL_FILE_SIZE			= <?php echo (int)SITE_GUEST_TOTAL_FILE_SIZE; ?>;
+			var UUID					= uuid();
+			var IS_BLOCKED				= false;
+			var UPLOAD_START_DATE		= null;
+
+			<?php foreach( $this->bg AS $key => $value ): ?>
+				BG['<?php echo $key; ?>'] = '<?php echo $value; ?>';
+			<?php endforeach; ?>
+
+			var BG_LIST = implode(', ', BG);			
+					
+			<?php foreach( $_SESSION['user'] AS $key => $value ): ?>
+				CURRENT_USER['<?php echo $key; ?>'] = '<?php echo $value; ?>';
+			<?php endforeach; ?>
+
+			var CURRENT_BG = BG[ array_rand( BG ) ];
+		</script>     
+	
+	    <meta name="robots" content="noimageindex" />
+	    <link rel="Shortcut Icon" type="image/x-icon" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/favicon.ico" />
+	        
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery-1.8.3.min.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.cookie.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery-ui-1.9.2.custom.min.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.plugin.min.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.countdown.min.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jstorage.min.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/themeswitcher.js?<?php echo rand(); ?>"></script>	
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.imgpreload.min.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/imagesloaded.pkgd.min.js"></script>	
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.blockUI.js"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.blockUI.defaults.js"></script>	
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.observor.js?<?php echo rand(); ?>"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/custom.js?<?php echo rand(); ?>"></script>
+		
+		<!-- link rel="stylesheet" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/css/jquery.countdown.css" type="text/css" -->		
+		<link rel="stylesheet" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/css/custom.css?<?php echo rand(); ?>" type="text/css">	
+		<link rel="stylesheet" id="theme-url" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/css/jquery-ui/themes/<?php echo $currentTheme; ?>/jquery-ui.css" type="text/css" media="screen" />			
+		<link rel="stylesheet" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/css/font-awesome.min.css">
+				
+		<!-- START:	Plupload -->
+			<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/browserplus-min.js"></script>
+			<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/plupload/moxie.min.js"></script>
+			<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/plupload/plupload.full.min.js"></script>
+			<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/plupload/jquery.plupload.queue/jquery.plupload.queue.min.js"></script>
+		<!-- END:	Plupload -->
+						     
+						     
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/tag-it.js" charset="utf-8"></script>
+		<link rel="stylesheet" type="text/css" href="<?php echo PROTOCOL_RELATIVE_URL; ?>/css/jquery.tagit.css">
+		
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/custom.validation.js?<?php echo rand(); ?>" charset="utf-8"></script>
+		<script type="text/javascript" src="<?php echo PROTOCOL_RELATIVE_URL; ?>/js/jquery.formparams.min.js" charset="utf-8"></script>								     
+	</head>
+
+<body>
+	<!-- START:		blockUI -->
+		<div style="display: block" class="blockUI"></div>
+		<div style="display: block; z-index: 1000; border: medium none; margin: 0px; padding: 0px; width: 100%; height: 100%; top: 0px; left: 0px; background-color: rgb(255, 255, 255); opacity: 0.6; cursor: wait; position: fixed;" class="blockUI blockOverlay"></div>
+		<div style="display: block; z-index: 1011; position: fixed; padding: 0px; margin: 0px; width: 30%; top: 40%; left: 35%; text-align: center; cursor: wait;" class="blockUI blockMsg blockPage"><img src="<?php echo PROTOCOL_RELATIVE_URL.'/'.SITE_DEFAULT_PRELOADER_IMAGE_PATH; ?>"></div>		
+	<!-- END:		blockUI -->	
+
+<div class="root">
+	<div id="bg">
+		<img id="wp1" style="cursor: pointer; left: 0px;">
+		<img id="wp2" style="cursor: pointer;">
+	</div>
+	
+	<!-- START:		modal -->
+	<div id="dialog-modal" style="display: none;">
+		<form method="post" name="frmUpload" id="frmUpload">
+			<input type="hidden" id="uuid" name="uuid" value="">
+			<table id="tblTransfer">
+				<tr>
+					<td>
+						<?php echo $_SESSION['site']['phrases']['to']; ?>
+					</td>				
+					<td>
+						<input required style="width: 460px;" id="recipients" name="recipients" type="text" value="">
+					</td>
+				</tr>
+				<tr>
+					<td>
+						<?php echo $_SESSION['site']['phrases']['from']; ?>
+					</td>				
+					<td>
+						<input required style="width: 460px;" id="email" name="email" type="text" value="">
+					</td>
+				</tr>
+				<tr>
+					<td valign="top">
+						<?php echo $_SESSION['site']['phrases']['message']; ?>
+					</td>				
+					<td>
+						<textarea autocomplete="off" class="text ui-widget-content ui-corner-all" style="width: 539px; height: 200px;" id="fileMessage" name="fileMessage"></textarea>
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2" align="right">
+						Max File Size:  <?php echo bytesToHumanReadable( (int)SITE_GUEST_MAX_FILE_SIZE * 1048576 ); ?> 
+					</td>
+				</tr>
+				<tr>
+					<td colspan="2">
+						<div id="fileList"></div>
+					</td>				
+				</tr>															
+				<tr>
+					<td colspan="2">
+						<div id="pluploadContainer">						
+							<div>
+								<button id="pickFiles"><?php echo $_SESSION['site']['phrases']['add_files']; ?></button>
+								<button id="uploadFiles"><?php echo $_SESSION['site']['phrases']['transfer']; ?></button>							
+							</div>
+						</div>
+					</td>
+				</tr>
+			</table>
+		</form>
+	</div>
+	<!-- END:	modal -->
+</div> <!-- .root -->
+
+		<script type="text/javascript">
+		    $(document).ready(function() {			    
+			    if( is_null( $.jStorage.get('recipients') ) || !is_array( $.jStorage.get('recipients') ) ) {
+				    var recipients = new Array();				    
+			    	$.jStorage.set('recipients', recipients); 
+			    }
+
+			    if( is_null( $.jStorage.get('sender') ) || !is_array( $.jStorage.get('sender') ) ) {
+				    var sender = new Array();				    
+			    	$.jStorage.set('sender', sender); 
+			    }			    
+			     			    
+				$.imgpreload([BASEURL + '/' + DEFAULT_PRELOADER_IMAGE, 
+							  BASEURL + '/images/backgrounds/default/default.png',
+							  BASEURL + '/images/preloader/168.gif', 
+							  CURRENT_BG,
+							  BASEURL + '/images/preloader/239-white.gif',
+							  BASEURL + '/images/preloader/163-white.gif',
+							  BASEURL + '/images/preloader/circle-loading.gif'
+					], {
+				    each: function() {
+				        // this = dom image object
+				        // check for success with: $(this).data('loaded')
+				        // callback executes on every image load
+				    },
+				    all: function() {
+		    			$('#wp1').attr('src', CURRENT_BG);							   
+				    	$('#wp1').css({ 'height': $(document).height(),
+				    					'width': $(document).width(),
+										'display': 'inline'			    	
+				    	});
+				        // this = array of dom image objects
+				        // check for success with: $(this[i]).data('loaded')
+				        // callback executes when all images are loaded				    		    			    
+				    	setInterval(function() {				    	
+					    	CURRENT_BG = BG[ array_rand( BG ) ];
+				    		$.imgpreload([ CURRENT_BG ], {
+								each: function() {
+		    				        // this = dom image object
+		    				        // check for success with: $(this).data('loaded')
+		    				        // callback executes on every image load
+								},
+								all: function() {
+		    				        // this = array of dom image objects
+		    				        // check for success with: $(this[i]).data('loaded')
+		    				        // callback executes when all images are loaded
+									$('#wp1').fadeOut(function() {										
+									    $(this).attr('src', CURRENT_BG ).fadeIn();
+									});			        
+								}
+							});					    		
+				    	}, 20000);				        
+				    }
+				});
+
+		    	$('#wp1').css({ 'height': $(document).height(),
+								'width': $(document).width(),			    	
+				});					
+
+			    $(window).resize(function() {
+			    	$('#wp1').css({ 'height': $(document).height(),
+									'width': $(document).width(),			    	
+					});	
+			    });	
+
+				var uploader = new plupload.Uploader({
+					runtimes: 'flash,html5,gears,browserplus,silverlight',
+					browse_button: 'pickFiles',
+					container: 'pluploadContainer',
+					max_file_size: MAX_FILE_SIZE + 'mb',
+					chunk_size: '1mb',
+					max_retries: 5,
+					url: BASEURL + '/upload',
+					flash_swf_url: BASEURL + '/js/plupload/moxie.swf',
+					silverlight_xap_url: BASEURL + '/js/plupload/moxie.xap',
+					filters: {
+						prevent_duplicates: true
+					},
+				    multipart_params: {
+				        'uuid': UUID
+				    },
+					unique_names: false,
+					multi_selection: true,
+					urlstream_upload: true,
+					drop_element: 'dialog-modal',
+
+			        // PreInit events, bound before any internal events
+			        preinit : {
+			            Init: function(up, info) {
+			                //console.log('[Init]', 'Info:', info, 'Features:', up.features);
+			            },
+			 
+			            UploadFile: function(up, file) {
+			            	//console.log('[UploadFile]', file);
+			 
+			                // You can override settings before the file is uploaded
+			                // up.settings.url = 'upload.php?id=' + file.id;
+			                // up.settings.multipart_params = {param1 : 'value1', param2 : 'value2'};
+			            }
+			        },	
+			        					
+			        init: {
+			            Refresh: function(up) {
+			                // Called when upload shim is moved
+			            },
+			 
+			            StateChanged: function(up) {
+			                // Called when the state of the queue is changed
+			                var state = parseInt( up.state );
+			                switch( state ) {
+			                	case 2:
+				                	$.unblockUI();
+				                	break;
+			                }
+			            },
+			 
+			            QueueChanged: function(up) {
+			                // Called when the files in queue are changed by adding/removing files
+							if( up.total.queued < 1 ) {
+								$('#uploadFiles').button({ disabled: true });
+							} else {
+								if( uploadFormIsValid() ) {
+									$('#uploadFiles').button({ disabled: false });							
+								} else {							
+									$('#uploadFiles').button({ disabled: true });							
+								}								
+							}			                
+			            },
+			 
+			            UploadProgress: function(up, file) {
+				            var uploadSpeed				= bytesToSize( up.total.bytesPerSec ); 
+				            var speed					= parseInt( up.total.bytesPerSec / 1024 );
+				            var totalUploaded			= uploader.total.loaded / uploader.total.size * 100;
+				            var percentUploaded			= ( ( Math.round( totalUploaded * 10000 ) ) / 100 );
+				            var totalPercent			= up.total.percent;
+				            var myRemainingBytes		= file.size - file.loaded;
+				            var remainingBytes			= uploader.total.size - uploader.total.loaded;
+				            var fileUploaded			= bytesToSize( file.loaded );	
+				            var filePercent				= file.percent;
+				            var fileSize				= file.size;
+				            var myETA					= ( Math.round( myRemainingBytes / up.total.bytesPerSec ) );				            
+				            var uploadETA				= ( Math.round( remainingBytes / up.total.bytesPerSec ) );
+				            var queueUploaded			= uploader.total.loaded;
+				            var queueUploadedReadable	= bytesToSize( queueUploaded ); 
+				            var queueSize				= up.total.size;	
+				            var queueSizeReadable		= bytesToSize( queueSize );
+				            myETA						= secondsToTime( myETA, false );
+				            myETA						= strlen( trim( myETA ) ) ? myETA : 'DONE';	 		            
+				           	uploadETA					= secondsToTime( uploadETA, false );
+				           	uploadETA					= strlen( trim( uploadETA ) ) ? uploadETA : 'DONE';	
+
+				           	if( is_null( UPLOAD_START_DATE ) ) {
+				           		UPLOAD_START_DATE = new Date();					           	
+				           	}   		            
+          				            
+				           	if( IS_BLOCKED ) {
+				            	$.unblockUI();					            
+				            	IS_BLOCKED = false;					            
+				            }
+				               
+			                // Called while a file is being uploaded
+							if( $('#' + file.id +'-trash').length ) {
+								$('#' + file.id +'-trash').remove();
+							}	
+												
+							$('#' + file.id + '-progressbar').progressbar({ value: file.percent,
+								complete: function() {
+								    setTimeout(function() {
+										$('#' + file.id + '-progressbar').fadeOut('slow', function() {
+											$('#' + file.id + '-progressbar').progressbar('destroy');																			 
+											$('#' + file.id + '-progressbar').remove(); 
+										});																		
+										$('#' + file.id + ' b').fadeOut('slow', function() { 
+											$(this).remove(); 
+											$('#' + file.id).append('<i class="icon-ok"></i>');
+										});
+								    }, 1000);																	
+								}																					
+							});				
+								
+							$('#' + file.id + ' b').html( file.percent + '%' );
+
+							if( $('#' + file.id + '-timeElapsed').hasClass('timerStarted') ) {
+								// do nothing
+							} else {
+								$('#' + file.id + '-timeElapsed').addClass('timerStarted');
+								$('#' + file.id + '-timeElapsed').countdown({since: UPLOAD_START_DATE, format: 'HMS', layout: 'Elapsed Time:  {hn} {hl} {mn} {ml} {sn} {sl}'});								
+							}									
+							
+							$('#' + file.id + '-uploadInfo').html( 'Upload Speed:  ' + uploadSpeed + '/s <br>ETA for this file: ' + myETA + '<br>Total ETA:  ' + uploadETA + '<br>Uploaded:  ' + fileUploaded + ' of ' + bytesToSize( file.size ) + '<br>Uploaded of Queue: '+ queueUploadedReadable +' of ' + queueSizeReadable + '<br>' + 'Total Progress:  ' + totalPercent + '%' );			                
+			            },
+			 
+			            FilesAdded: function(up, files) {
+							$.each(files, function(i, file) {
+								$('#fileList').append(
+									'<div id="' + file.id + '">' +
+									file.name + ' (' + plupload.formatSize(file.size) + ') <b></b>' +
+								'</div><div id="'+file.id+'-progressbar"><div class="progress-label"></div></div><div style="margin-top: 5px;" id="'+file.id+'-timeElapsed"></div><div class="alert alert-info" style="margin-bottom: 5px;" id="'+file.id+'-uploadInfo"></div>');
+
+								$('#' + file.id).prepend('<i id="'+file.id+'-trash" class="deleteFile icon-trash" data-fileid="'+file.id+'"></i>&nbsp;');
+								$('#'+file.id+'-trash').live('click', function(event) {
+									uploader.splice(file.id, 1);
+									$('#' + file.id).fadeOut('slow', function() { 
+										$(this).remove(); 
+									});							
+								});						
+							});
+
+							// START:	remove errors
+						    setTimeout(function() {
+								$('.ui-state-error').fadeOut('slow', function() {																 
+									$(this).remove(); 
+								});																		
+						    }, 1000);				
+						    // END:		remove errors	
+							
+							up.refresh(); // Reposition Flash/Silverlight
+			            },
+			 
+			            FilesRemoved: function(up, files) {
+			                // Called when files where removed from queue
+			 
+			                plupload.each(files, function(file) {
+
+			                });
+			            },
+			 
+			            FileUploaded: function(up, file, info) {
+			                // Called when a file has finished uploading
+							$('#' + file.id + ' b').html('100%');
+							$('#' + file.id + '-uploadInfo').remove();
+							$('#' + file.id + '-timeElapsed').remove();
+												
+							if( up.total.queued < 1 ) {
+								$('#uploadFiles').button({ disabled: true });
+								var formParams = $('#frmUpload').formParams();
+		
+								$('.ui-dialog').block({
+									message: '<img src="'+ BASEURL + '/images/preloader/239-white.gif" border="0">',
+								    overlayCSS:  { 
+								        backgroundColor: '#000000', 
+								        opacity:         0.6, 
+								        cursor:          'wait' 
+								    }									
+								});
+
+							    setTimeout(function() {									
+									$.ajax({
+										type: 'POST',
+										url: BASEURL + '/upload',
+										data: { formParams: formParams },
+										complete: function( jqXHR, textStatus ) {
+											$('.ui-dialog').unblock();								
+										},
+										error: function( jqXHR, textStatus, errorThrown ) {
+										},
+										success: function( response, textStatus, jqXHR ) {
+											$('#dialog-modal').html( $('#uploadSuccess').html() );
+										},
+										dataType: 'json'
+									});										
+							    }, 10000);												
+							}			                
+			            },
+			 
+			            ChunkUploaded: function(up, file, info) {
+			                // Called when a file chunk has finished uploading
+			            },
+			 
+			            Error: function(up, args) {
+			                // Called when a error has occured
+							$('#fileList').append('<div style="padding: 0 .7em;" class="ui-widget ui-state-error ui-corner-all" id="' + args.file.id + '"><i id="'+args.file.id+'-trash" class="icon-trash deleteFile" data-fileid="'+args.file.id+'"></i> Error: ' + args.code +
+									', Message: ' + args.message +
+									(args.file ? ', File: ' + args.file.name : '') +
+									' <i class="icon-warning-sign"></i></div>'
+								);
+		
+								$('#'+args.file.id+'-trash').live('click', function(event) {
+									uploader.splice(args.file.id, 1);
+									$('#' + args.file.id).fadeOut('slow', function() { 
+										$(this).remove(); 
+									});							
+								});	
+		
+								up.refresh(); // Reposition Flash/Silverlight			                
+						}
+			        }										
+				});
+
+				uploader.init();			    			
+		    				    
+				$('#dialog-modal').dialog({
+					autoOpen: true,
+					minHeight: 400,
+					minWidth: 640,
+					modal: false,
+					closeOnEscape: false,
+					title: '<span class="icon-cloud-upload" style="float: left; margin-right: 10px;"></span> ' + SITE_NAME,
+					open: function(event, ui) {
+						$('#uuid').val( UUID ); 						
+						$('#recipients').tagit({
+							availableTags: $.jStorage.get('recipients'),														
+							tagLimit: parseInt( MAX_RECIPIENTS ),
+						    fieldName: 'sendTo',
+						    placeholderText: SITE_PHRASES['your_friend_email'],
+						    preprocessTag: function(value) {
+							    if( isValidEmailAddress( value ) ) {
+								    return value;
+							    } else {
+									return '';								    
+							    }        
+						    },
+			                onTagExists: function(event, ui) {
+			                    $(this).tagit('tagLabel', ui.existingTag);
+			                },
+						    afterTagAdded: function(event, ui) {
+							    var currentVal = explode( ',', $('#recipients').val() );
+								if( count( currentVal ) == parseInt( MAX_RECIPIENTS ) ) {
+									$(this).tagit('setPlaceHolder', '');
+									$(this).tagit('setReadOnly', true);
+								} else {							
+									$(this).tagit('setPlaceHolder', SITE_PHRASES['your_friend_email']);
+									$(this).tagit('setReadOnly', false);									
+								}	
+
+								var existingList	= $.jStorage.get('recipients'); 
+								var currentTags		= currentVal;
+								var newList			= existingList;
+
+								$.each(currentTags, function( index, value ) {
+									if( !in_array( value, existingList ) ) {
+										newList.push( value );
+									}	
+								});
+								
+								$.jStorage.set('recipients', newList);
+							     
+								if( uploadFormIsValid() && uploader.total.queued > 0) {
+									$('#uploadFiles').button({ disabled: false });							
+								} else {							
+									$('#uploadFiles').button({ disabled: true });							
+								}						    	
+						    },
+						    afterTagRemoved: function(event, ui) {
+							    var currentVal = explode( ',', $('#recipients').val() );
+								if( count( currentVal ) < parseInt( MAX_RECIPIENTS ) ) {
+									$(this).tagit('setPlaceHolder', SITE_PHRASES['your_friend_email']);
+									$(this).tagit('setReadOnly', false);									
+								}						    	
+						    								    
+								if( uploadFormIsValid() && uploader.total.queued > 0) {
+									$('#uploadFiles').button({ disabled: false });							
+								} else {							
+									$('#uploadFiles').button({ disabled: true });							
+								}						    	
+						    },			                
+			                caseSensitive: false						        						    
+						});
+
+						$('#email').tagit({
+							availableTags: $.jStorage.get('sender'),							
+							tagLimit: 1,
+							placeholderText: SITE_PHRASES['your_email'],
+						    preprocessTag: function(value) {
+							    if( isValidEmailAddress( value ) ) {
+								    return value;
+							    } else {
+									return '';								    
+							    }        
+						    },							
+						    afterTagAdded: function(event, ui) {
+						    	$.cookie('email', ui.tagLabel, { expires: 3650 });
+						    	$(this).tagit('setPlaceHolder', '');
+
+								if( uploadFormIsValid() && uploader.total.queued > 0) {
+									$('#uploadFiles').button({ disabled: false });							
+								} else {							
+									$('#uploadFiles').button({ disabled: true });							
+								}
+
+								$(this).tagit('setReadOnly', true);								
+
+								var existingList	= $.jStorage.get('sender'); 
+								var currentTag		= ui.tagLabel;
+								var newList			= existingList;
+
+								if( !in_array( currentTag, existingList ) ) {
+									newList.push( currentTag );
+								}	
+								
+								$.jStorage.set('sender', newList);														    	
+						    },
+						    afterTagRemoved: function(event, ui) {
+						    	$(this).tagit('setReadOnly', false);							    
+						    	$(this).tagit('setPlaceHolder', SITE_PHRASES['your_email']);
+						    	$.removeCookie('email');
+
+								if( uploadFormIsValid() ) {
+									$('#uploadFiles').button({ disabled: false });							
+								} else {							
+									$('#uploadFiles').button({ disabled: true });							
+								}						    	
+						    },						    
+						    caseSensitive: false							
+						});	
+
+						var email = $.cookie('email');
+						if( typeof email !== 'undefined' ) {
+							email = trim( email );
+							if( strlen( email ) ) {
+								$('#email').tagit('createTag', email);
+								$('#email').tagit('setPlaceHolder', '');
+								$('#email').tagit('setReadOnly', true);							
+							}											
+						}	
+												
+						// remove close button
+						$('.ui-dialog-titlebar-close').remove();
+						$('#pickFiles').button({
+							icons: {
+								primary: 'ui-icon-plus'
+							}
+						});
+
+						$('#uploadFiles').button({
+							icons: {
+								primary: 'ui-icon-check'
+							},
+							disabled: true
+						});
+					},
+					position: { my: 'left center', 
+								at: 'left center'
+					}												    		 
+				});				
+						    
+				$('body').imagesLoaded( function() {
+					$.unblockUI();
+				});
+
+				$('#uploadFiles').click(function(e) {
+					uploader.start();
+					e.preventDefault();
+					$('#uploadFiles').button({ disabled: true });
+
+					$.blockUI({
+						message: '<img src="'+BASEURL+'/images/preloader/circle-loading.gif" border="0">',
+					    overlayCSS:  { 
+					        backgroundColor: '#000000', 
+					        opacity:         0.6, 
+					        cursor:          'wait' 
+					    }, 						
+						baseZ: 1008,
+			            onBlock: function() { 
+			                IS_BLOCKED = true; 
+			            }						
+					});
+				});																							    
+		    });		    				    
+		</script>
+		
+		<?php echo $this->partial( 'partials/footer.phtml' ); ?>
+		
+		<div id="uploadSuccess">
+			<div class="absolute-center" style="text-align: center;">
+				<i class="icon-ok icon-4x" style="font-size: x-large; !important"></i>
+				<p><?php echo $_SESSION['site']['phrases']['file_upload_success']; ?></p>
+			</div>
+		</div>										
+	</body>
+</html>

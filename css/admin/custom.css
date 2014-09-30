@@ -1,0 +1,15 @@
+.adminAvatarThumb {
+	border: 1px;
+	border-color: #FFFFFF;
+	border-style: solid;
+	height: 25px;
+	width: 25px;		
+}
+
+td {
+	vertical-align: top !important;	
+}
+
+th.sorting, th.sorting_asc, th.sorting_desc {
+	cursor: pointer;	
+}

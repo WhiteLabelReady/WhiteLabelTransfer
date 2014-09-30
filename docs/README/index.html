@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="CONTENT-TYPE" content="text/html; charset=utf-8"/>
+	<meta http-equiv="CONTENT-LANGUAGE" content="EN"/>				
+	<meta http-equiv="Cache-Control" content="no-cache/"/>
+	<meta http-equiv="Pragma" content="no-cache"/>
+	<meta http-equiv="Expires" content="-1"/>
+	<meta name="robots" content="noindex, nofollow">
+		
+	<title>WT Clone - Installer [HOW TO]</title>
+	    
+    <!-- php.js -->
+	<script src="js/phpjs.js" type="text/javascript"></script>
+		
+	<link rel="stylesheet" href="css/bootstrap/bootstrap.min.css">		
+	<link rel="stylesheet" href="css/custom.css">	
+	<link href="css/font-awesome.min.css" rel="stylesheet">
+	<!--[if IE 7]>
+	  <link rel="stylesheet" href="css/font-awesome-ie7.min.css">
+	<![endif]-->	
+	
+	<link rel="stylesheet" href="css/jquery-ui/delta/jquery-ui.css">
+	
+	<script src="js/jquery-1.7.2.min.js" type="text/javascript"></script>
+    <script src="js/jquery-ui-1.8.19.custom.min.js" type="text/javascript"></script>      
+	<script type="text/javascript" src="js/jquery.imgpreload.min.js"></script>
+	<script type="text/javascript" src="js/imagesloaded.pkgd.min.js"></script>               
+    
+    <!--  blockUI -->
+    <script src="js/jquery.blockUI.js" type="text/javascript"></script>
+    <script src="js/jquery.blockUI.defaults.js" type="text/javascript"></script>
+    
+    <!--  custom functions -->
+    <script src="js/functions.js" type="text/javascript"></script>	
+    <script src="js/bootstrap/bootstrap.min.js" type="text/javascript"></script>
+    <script src="js/bootbox.min.js" type="text/javascript"></script>		
+</head>
+<body>	
+	<div class="center">
+		<div id="logo">
+			<a href="">
+				<img src="img/wtclone_logo.png" border="0" alt="WT Clone" title="White Label Transfer">
+			</a>
+		</div>
+		<div id="install" class="alert alert-info">
+			<div style="margin-bottom: 20px;">
+				<i class="icon-info"></i> WT Clone - Installation Instructions
+			</div>
+					
+			<ol>
+				<li>Upload all files to your webserver</li>
+				<li>Access your site</li>
+				<li>You will be redirected to the installation wizard @ http://domain.tld/install</li>
+				<li>On-screen instructions are provided in the installation wizard</li>
+				<li>If further assistance is required, please contact <a href="mailto:dev@whitelabeltransfer.com">dev@whitelabeltransfer.com</a></li>
+			</ol>
+		</div>
+	</div>
+
+	<!--  START:	blockUI on page load -->
+	<div style="display: none;" class="blockUI"></div>
+	<div style="z-index: 1000; position: fixed;" class="blockUI blockOverlay ui-widget-overlay"></div>
+	<div style="z-index: 1011; position: fixed; width: 30%; top: 40%; left: 35%;" class="blockUI blockMsg blockPage ui-dialog ui-widget ui-corner-all ui-widget-content ui-draggable">
+		<div class="ui-widget-header ui-dialog-titlebar ui-corner-all blockTitle">Loading</div>
+		<div class="ui-widget-content ui-dialog-content">
+			<p>Loading, please wait...</p>
+		</div>
+	</div>
+	<!--  END:		blockUI on page load -->
+
+		<script type="text/javascript">
+			$(document).ready(function() {
+				$.unblockUI();
+			});		
+		</script>
+	</body>
+</html>

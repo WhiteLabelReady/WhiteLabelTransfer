@@ -1,0 +1,51 @@
+<div id="siteControls" style="width: 200px; position: absolute; bottom: 10px; right: 100px;">
+	<table style="width: 100%;">
+		<tr>
+			<td>
+				<?php if( (int)SITE_ALLOW_LANGUAGE_CHANGE == 1 ): ?>	
+					<select class="jquery-ui" autocomplete="off" name="langSelect" id="langSelect">
+						<option value=""><?php echo ucfirst( $_SESSION['site']['phrases']['language'] ); ?></option>
+						<option <?php if( $_SESSION['user']['site_language'] == 1 ): ?> selected="selected" <?php endif; ?> value="1">English (U.S.)</option>
+						<option <?php if( $_SESSION['user']['site_language'] == 2 ): ?> selected="selected" <?php endif; ?> value="2">Deutsch</option>
+					</select>
+				<?php endif; ?>			
+			</td>
+			<td>
+				<?php if( (int)SITE_ALLOW_TEMPLATE_CHANGE == 1 ): ?>			
+					<div id="theme-switcher"></div>
+				<?php endif; ?>			 
+		
+				<?php if( (int)SITE_ALLOW_TEMPLATE_CHANGE == 1 ): ?>	
+					<script type="text/javascript">
+						$( document ).ready(function() {
+							$('#theme-switcher').themeswitcher( { 
+						    	loadTheme: CURRENT_THEME,
+						    	localCssPath: BASEURL + '/css/jquery-ui/themes', 
+						    	localThemes: SITE_THEMES,
+						    	cookieExpires: 315569259747, 
+						    	cookiePath: '/',		   
+						    	cookieName: 'theme', 
+						    	cookieOnSet: function( cookieName, cookieValue ) {
+							    	CURRENT_THEME = cookieValue;
+						
+						    		$.post( BASEURL, { sessionUpdate: true, theme: cookieValue },
+										function( data ) {
+																						    				
+										}
+									);					
+							    },
+						    	onSelect: function() {						  						    
+						    		$.blockUI({ message: '<img border="0" src="' + BASEURL + '/images/preloader/tools.gif">' });
+						    		$('.ui-dialog').hide();						    		   			
+						    	},
+						    	onSelectComplete: function() {		     
+									location.reload();
+						    	}
+							});
+						});	
+					</script>	
+				<?php endif; ?>				
+			</td>			
+		</tr>
+	</table>						
+</div>

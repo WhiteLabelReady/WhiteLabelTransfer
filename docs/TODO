@@ -1,0 +1,20 @@
+REQUIRED
+----------------
+-Upload [DONE]
+-Notification of Upload [DONE]
+-Admin Interface [DONE]
+-Get translation via a function, instead of $_SESSION [DONE]
+-Downloads [DONE]
+-Add Recipients to DB [DONE]
+-Notification of Waiting Upload to Recipients [DONE]
+-Notification of Download to Uploader [DONE]
+-Auto-completion of user e-mail addresses [DONE]
+-Cleanup frontend UI [DONE]
+-Log Downloads to DB [DONE]
+-Automatic Deletion of Expired Downloads [DONE]
+
+
+"NICE TO HAVE"
+----------------
+-Premium User Accounts
+-Download Page
