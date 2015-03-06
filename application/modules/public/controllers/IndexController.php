@@ -4,7 +4,7 @@
  * Index Controller
  *
  * @author      BizLogic <code@whitelabeltransfer.com>
- * @copyright   2012 - 2014 BizLogic
+ * @copyright   2012 - 2015 BizLogic
  * @link        http://whitelabeltransfer.com
  * @license     GNU Affero General Public License v3
  *

@@ -22,7 +22,7 @@ class BizLogic_WeTransfer
      * fetch site configuration from the DB
      *
      * @return  array
-     */
+    */
     public function fetchSiteConfig()
     {
         $data   = array();
@@ -48,6 +48,10 @@ class BizLogic_WeTransfer
 
         if( !empty( $config ) ) {
             foreach( $config AS $key => $value ) {
+				if( preg_match( '/__BASEURL__/', $value['value'] ) ) {
+					$value['value'] = str_replace( '__BASEURL__', BASEURL, $value['value'] );
+				}
+
                 define( strtoupper( $value['name'] ), $value['value'] );
             }
         }

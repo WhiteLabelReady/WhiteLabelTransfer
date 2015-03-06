@@ -1369,12 +1369,12 @@ function isAllowedFileType( $fileExt )
 }
 
 /**
- * determine if a media type is allowed
+ * Determine if a media type is allowed
  * for upload 
  *
  * @param	string	$filePath
  * @return  boolean
- */
+*/
 function isAllowedMediaType( $fileExt )
 {
 	// trim spaces
@@ -1386,4 +1386,33 @@ function isAllowedMediaType( $fileExt )
 	} else {
 		return true;		
 	}
+}
+
+/**
+ * Translate a string
+ *
+ * @param	string	$string
+ * @return  string
+*/
+function translate( $string )
+{
+	$lcString = strtolower( $string );
+	if( array_key_exists( $lcString, $_SESSION['site']['phrases'] ) ) {
+		return $_SESSION['site']['phrases'][$lcString];
+	}
+	
+	return $string;
+}
+
+function printAndExit( $value )
+{
+	echo '<pre>';
+	
+	if( is_array( $value ) OR is_object( $value ) ) {
+		print_r( $value );
+	} else {
+		echo $value;
+	}
+	
+	exit;
 }
