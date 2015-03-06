@@ -15,4 +15,8 @@ WhiteLabelTransfer
 * Zend Framework 1.x
 
 ## UI
-* Bootstrap, CSS, HTML, JavaScript, jQuery
+* Bootstrap
+* CSS
+* HTML
+* JavaScript
+* jQuery
