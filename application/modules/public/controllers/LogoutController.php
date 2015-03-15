@@ -3,9 +3,10 @@
  * White Label Transfer
  * Logout Controller
  *
- * @author      BizLogic <code@whitelabeltransfer.com>
- * @copyright   2013 - 2014 BizLogic
+ * @author      BizLogic <hire@whitelabeltransfer.com>
+ * @copyright   2013 - 2015 BizLogic
  * @link        http://whitelabeltransfer.com
+ * @link        http://bizlogicdev.com
  * @license     GNU Affero General Public License v3
  *
  * @since  	    Friday, November 29, 2013, 05:33 PM GMT+1
@@ -23,13 +24,19 @@ class LogoutController extends Zend_Controller_Action
     {    	    	
     	if( !@$_SESSION['user']['logged_in'] ) {
     		header( 'Location: '.BASEURL.'/login' );
+    		exit;
     	}
     	 
     	session_unset();
     	session_destroy();
     	 
-    	header( 'Location: '.BASEURL.'' );    	
+    	header( 'Location: '.BASEURL.'' );
+    	exit;    	
     }
 
-    public function indexAction() {}
+    public function indexAction() 
+    {
+        // disable the view
+        $this->_helper->viewRenderer->setNoRender( true );        
+    }
 }
