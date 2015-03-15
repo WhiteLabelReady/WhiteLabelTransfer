@@ -9,7 +9,7 @@
 	<meta http-equiv="Expires" content="-1"/>
 	<meta name="robots" content="noindex, nofollow">
 		
-	<title>White Label Transfer - Installer [BizLogic]</title>
+	<title>{$smarty.const.APP_NAME} &mdash; Installer [BizLogic]</title>
 			
 	<script type="text/javascript">
 		var BASEURL					= '{$smarty.const.BASEURL}';
@@ -36,10 +36,7 @@
 	<link rel="stylesheet" href="{$smarty.const.BASEURL}/css/bootstrap/bootstrap.min.css">
 	<link rel="stylesheet" href="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.19/themes/base/jquery-ui.css">		
 	<link rel="stylesheet" href="{$smarty.const.BASEURL}/css/custom.css?{math equation='rand()'}">	
-	<link href="../css/font-awesome.min.css" rel="stylesheet">
-	<!--[if IE 7]>
-	  <link rel="stylesheet" href="../css/font-awesome-ie7.min.css">
-	<![endif]-->	
+	<link href="../css/font-awesome.min.css" rel="stylesheet">	
 	
 	{switch $smarty.session.theme|lower}
 		{case "absolution"}
@@ -82,7 +79,7 @@
 	<div class="center">
 		<div id="logo">
 			<a href="{$smarty.const.BASEURL}">
-				<img src="{$smarty.const.BASEURL}/img/wtclone_logo.png" border="0" alt="WT Clone" title="WT Clone">
+				{$smarty.const.APP_LOGO_HTML}
 			</a>
 		</div>
 		<div id="installWizard">
@@ -121,16 +118,16 @@
 								removeFromArray(GOOD_STEPS, 0);						
 							</script> 									
 							<div class="alert alert-danger">
-								<i class="btnPageRefresh icon-refresh" style="float: right;"></i>
-								<i class="icon-warning-sign"></i> Please CHMOD the following files or directories to 0777
+								<i class="btnPageRefresh fa fa-refresh" style="float: right;"></i>
+								<i class="fa fa-warning"></i> Please CHMOD the following files or directories to 0777
 							</div>											
 							<ol>
 							{foreach from=$permissionErrors item=error}
-							    <li><i style="color: #A94442;" class="icon-warning-sign"></i> {$error}</li>
+							    <li><i style="color: #A94442;" class="fa fa-warning"></i> {$error}</li>
 							{/foreach}
 						{else}
 							<div class="alert alert-success">
-								<i class="icon-ok"></i> File permissions are OK
+								<i class="fa fa-check"></i> File permissions are OK
 								<script type="text/javascript">
 									if( !in_array( GOOD_STEPS ) ) {
 										GOOD_STEPS.push(0);									
@@ -253,7 +250,7 @@
 	<div style="z-index: 1011; position: fixed; width: 30%; top: 40%; left: 35%;" class="blockUI blockMsg blockPage ui-dialog ui-widget ui-corner-all ui-widget-content ui-draggable">
 		<div class="ui-widget-header ui-dialog-titlebar ui-corner-all blockTitle">Loading</div>
 		<div class="ui-widget-content ui-dialog-content">
-			<p>Loading, please wait...</p>
+			<p>Loading, please wait... <i class="fa fa-spinner fa-pulse"></i></p>
 		</div>
 	</div>
 	<!--  END:		blockUI on page load -->

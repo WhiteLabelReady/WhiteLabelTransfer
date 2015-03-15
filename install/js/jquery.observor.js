@@ -19,7 +19,7 @@ $(document).ready(function() {
 	$('.button-finish').click(function() {
 		bootbox.dialog({
 			message: 'Please <strong>delete the install</strong> directory located @ ' + BASEDIR,
-			title: '<i class="icon-ok"></i> Installation Complete',
+			title: '<i class="fa fa-check"></i> Installation Complete',
 			buttons: {
 				main: {
 					label: 'OK',
@@ -46,13 +46,13 @@ $(document).ready(function() {
 					removeFromArray(GOOD_STEPS, currentIndex);					
 					bootbox.dialog({
 						message: 'Please rectify the unresolved errors',
-						title: '<i class="icon-warning-sign"></i> Installation ERROR',
+						title: '<i class="fa fa-warning"></i> Installation ERROR',
 						buttons: {
 							main: {
 								label: 'OK',
 								className: 'btn-primary',
 								callback: function() {
-
+									// ...
 								}
 							}
 						}
@@ -65,19 +65,20 @@ $(document).ready(function() {
 							$.ajax({
 								type: 'POST',
 								url: BASEURL + '/',
-								data: {	ajax: 1, 
-										method: 'adminCred',
-										adminUsername: $('#adminUsername').val(),
-										adminPassword: $('#adminPassword').val()
+								data: {	
+									ajax: 1, 
+									method: 'adminCred',
+									adminUsername: $('#adminUsername').val(),
+									adminPassword: $('#adminPassword').val()
 								},
 								complete: function( jqXHR, textStatus ) {
-	
+									// ...
 								},
 								success: function( response, textStatus, jqXHRresponse ) {
-
+									// ...
 								},
 								error: function( jqXHR, textStatus, errorThrown ) {
-
+									// ...
 								},		
 								dataType: 'json'
 							});
@@ -94,13 +95,14 @@ $(document).ready(function() {
 							$.ajax({
 								type: 'POST',
 								url: BASEURL + '/',
-								data: {	ajax: 1, 
-										method: 'dbCheck',
-										dbHost: $('#dbHost').val(),
-										dbPort: $('#dbPort').val(),
-										dbName: $('#dbName').val(),
-										dbUsername: $('#dbUsername').val(),
-										dbPassword: $('#dbPassword').val(),
+								data: {	
+									ajax: 1, 
+									method: 'dbCheck',
+									dbHost: $('#dbHost').val(),
+									dbPort: $('#dbPort').val(),
+									dbName: $('#dbName').val(),
+									dbUsername: $('#dbUsername').val(),
+									dbPassword: $('#dbPassword').val(),
 								},
 								complete: function( jqXHR, textStatus ) {
 									$.unblockUI();								
@@ -108,7 +110,7 @@ $(document).ready(function() {
 								success: function( response, textStatus, jqXHRresponse ) {
 									if( response.status == 'OK' ) {
 										$('#dbErrorMessage').fadeOut();
-										$('#dbSuccessMessage').html('<i class="icon-ok"></i> Database connection established. Click \'Next\' to proceed.').fadeIn();
+										$('#dbSuccessMessage').html('<i class="fa fa-check"></i> Database connection established. Click \'Next\' to proceed.').fadeIn();
 										$('.pager').find('.button-next').val('Next');
 										DB_ERROR = false;										
 									} else {
@@ -162,13 +164,13 @@ $(document).ready(function() {
 				if( !in_array( currentIndex, GOOD_STEPS ) ) {
 					bootbox.dialog({
 						message: 'Please resolve the errors presented on this page',
-						title: '<i class="icon-warning-sign"></i> Installation ERROR',
+						title: '<i class="fa fa-warning"></i> Installation ERROR',
 						buttons: {
 							main: {
 								label: 'OK',
 								className: 'btn-primary',
 								callback: function() {
-
+									// ...
 								}
 							}
 						}
@@ -184,13 +186,13 @@ $(document).ready(function() {
 				if( !in_array( parseInt(currentIndex - 1), GOOD_STEPS ) ) {					
 					bootbox.dialog({
 						message: 'All installation steps must be followed sequentially',
-						title: '<i class="icon-warning-sign"></i> ERROR',
+						title: '<i class="fa fa-warning"></i> ERROR',
 						buttons: {
 							main: {
 								label: 'OK',
 								className: 'btn-primary',
 								callback: function() {
-
+									// ...
 								}
 							}
 						}
@@ -247,13 +249,13 @@ $(document).ready(function() {
 				if( !in_array( index, GOOD_STEPS ) ) {
 					bootbox.dialog({
 						message: 'Please resolve the errors presented on this page',
-						title: '<i class="icon-warning-sign"></i> Installation ERROR',
+						title: '<i class="fa fa-warning"></i> Installation ERROR',
 						buttons: {
 							main: {
 								label: 'OK',
 								className: 'btn-primary',
 								callback: function() {
-
+									// ...
 								}
 							}
 						}
@@ -273,7 +275,7 @@ $(document).ready(function() {
     	cookieOnSet: function( cookieName, cookieValue ) {
     		$.post( BASEURL + '/', { sessionUpdate: true, theme: cookieValue },
     				function( data ) {
-						
+    					// ...
 					}
 			);					
 	    },
@@ -282,7 +284,7 @@ $(document).ready(function() {
     		reloadPage();		    			
     	},
     	onSelectComplete: function() {		     
-    		
+    		// ...
     	}
 	});	    	
 

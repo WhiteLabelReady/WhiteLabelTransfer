@@ -3,10 +3,10 @@
  * White Label Transfer
  * Various Functions
  *
- * @author      BizLogic <dev@whitelabeltransfer.com>
+ * @author      BizLogic <hire@whitelabeltransfer.com>
  * @license     GNU Affero General Public License v3
  * @link        http://whitelabeltransfer.com
- * @link        https://whitelabeltransfer.com
+ * @link        http://bizlogicdev.com
  *
  * @since       Wednesday, October 21, 2009 / 07:01 PM UTC+1 (mknox)
  * @edited      $Date: 2011-05-03 12:36:13 +0200 (Tue, 03 May 2011) $ $Author: mknox $
@@ -18,7 +18,7 @@
 
 function updateAdminAccount( $username, $password )
 {
-	$sql = "UPDATE `wetransfer_users` ";
+	$sql = "UPDATE `".mysql_real_escape_string( DB_TABLE_PREFIX )."users` ";
 	$sql .= "SET `username` = '".mysql_real_escape_string( $username )."', ";
 	$sql .= "`password` = '".mysql_real_escape_string( sha1( $password ) )."' ";
 	$sql .= "WHERE `id` = '1' ";
@@ -37,6 +37,7 @@ function updateDbConfig()
 	$dbConfig 	= str_replace('__DB_USERNAME__', '"'.$_SESSION['dbUsername'].'"', $dbConfig );
 	$dbConfig 	= str_replace('__DB_PASSWORD__', '"'.$_SESSION['dbPassword'].'"', $dbConfig );
 	$dbConfig 	= str_replace('__DB_NAME__', '"'.$_SESSION['dbName'].'"', $dbConfig );
+	$dbConfig 	= str_replace('__DB_TABLE_PREFIX__', DB_TABLE_PREFIX, $dbConfig );
 
 	// save
 	file_put_contents( $target, $dbConfig );
