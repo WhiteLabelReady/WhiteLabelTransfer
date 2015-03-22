@@ -3,9 +3,10 @@
  * White Label Transfer
  * Class to Extend Zend_Cache
  *
- * @author      BizLogic <code@whitelabeltransfer.com>
- * @copyright   2012 - 2014 BizLogic
+ * @author      BizLogic <hire@whitelabeltransfer.com>
+ * @copyright   2012 - 2015 BizLogic
  * @link        http://whitelabeltransfer.com
+ * @link        http://bizlogicdev.com
  * @license     GNU Affero General Public License v3
  *
  * @since       Tuesday, November 27, 2012, 08:00 AM GMT+1 mknox
@@ -13,7 +14,7 @@
  * @version     $Id: Cache.php 5997 2012-01-06 15:30:53Z mknox $
  *
  * @package     White Label Transfer
- */
+*/
 
 class BizLogic_Cache extends Zend_Cache
 {
@@ -31,11 +32,15 @@ class BizLogic_Cache extends Zend_Cache
             'automatic_serialization' => true
         );
 
-        $backendOptions = array('cache_dir' => ROOT_DIR.'/data/cache/');
+        $backendOptions = array(
+            'cache_dir' => ROOT_DIR.'/data/cache/'            
+        );
 
-        $cache = Zend_Cache::factory(   'Core', 'File',
-                                        $frontendOptions,
-                                        $backendOptions
+        $cache = Zend_Cache::factory(   
+            'Core', 
+            'File',
+            $frontendOptions,
+            $backendOptions
         );
 
         Zend_Registry::set( $cacheObj, $cache );

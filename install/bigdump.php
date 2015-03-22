@@ -890,7 +890,7 @@ skin_open();
       ?>
       	<script type="text/javascript">
       		$(document).ready(function() {
-      			$('#bigdumpBody').html('<div class="alert alert-success"><i class="icon-ok"></i> Installation complete!<br>Please <strong>delete the install directory</strong> located @ '+BASEDIR+' for security reasons.</div>');
+      			$('#bigdumpBody').html('<div class="alert alert-success"><i class="fa fa-check"></i> Installation complete!<br>Please <strong>delete the install directory</strong> located @ '+BASEDIR+' for security reasons.</div>');
       			$.unblockUI();		
       		});	
       	</script>

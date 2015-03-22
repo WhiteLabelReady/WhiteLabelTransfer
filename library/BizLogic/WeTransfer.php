@@ -3,9 +3,10 @@
  * White Label Transfer
  * Core Library
  *
- * @author      BizLogic <code@whitelabeltransfer.com>
- * @copyright   2012 - 2014 BizLogic
+ * @author      BizLogic <hire@whitelabeltransfer.com>
+ * @copyright   2012 - 2015 BizLogic
  * @link        http://whitelabeltransfer.com
+ * @link        http://bizlogicdev.com
  * @license     GNU Affero General Public License v3
  *
  * @since  	    Tuesday, November 27, 2012, 04:39 PM GMT+1
